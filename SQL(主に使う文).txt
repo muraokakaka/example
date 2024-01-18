@@ -1,0 +1,34 @@
+・今日の日付を取得するSQL文
+SELECT CURRENT_DATE;
+
+・文字列から数値を取り出す文
+SELECT date
+TRANSLATE(date, TRANSLATE(date, '0123456789', ''), '') AS date_number
+FROM reservetable
+
+・年齢を出す文
+SELECT *,
+CONCAT(FLOOR(EXTRACT(YEAR FROM AGE(to_date)) / 10) * 10, 's') AS age_group
+FROM (SELECT TO_DATE(birth, 'YYYY年mm月dd日') FROM membertable) AS date_age
+
+・2024/01/01を2024-01-01に変更する文
+SELECT TO_DATE(birth, 'YYYY年mm月dd日')
+FROM membertable
+
+・テーブルを結合してreserveidから年齢を出す
+SELECT reserveid,CONCAT(FLOOR(EXTRACT(YEAR FROM AGE(TO_DATE(birth, 'YYYY年mm月dd日'))) / 10) * 10, 's') AS age_group
+FROM membertable
+INNER JOIN reservetable
+ON membertable.memberid = reservetable.memberid
+
+・テーブルを結合してreserveidから年齢を出す(派生)
+SELECT COUNT(reserveid),CONCAT(FLOOR(EXTRACT(YEAR FROM AGE(TO_DATE(birth, 'YYYY年mm月dd日'))) / 10) * 10, ' ') AS age_group
+FROM membertable
+INNER JOIN reservetable
+ON membertable.memberid = reservetable.memberid
+GROUP BY age_group
+
+・行合計
+SELECT COUNT(TO_DATE(date, 'YYYY年mm月dd日'))
+FROM reservetable
+WHERE date BETWEEN '2024/01/01' AND '2024/01/07' AND titleid = '1'
