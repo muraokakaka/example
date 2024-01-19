@@ -1,0 +1,14 @@
+・一つのアプリ
+VBA
+
+・一つのアプリ
+HTML
+CSS
+JavaScript
+PostgreSQL
+
+・一つのアプリ
+Python
+Sqlite
+
+計三つ
